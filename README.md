@@ -27,5 +27,3 @@
 </div>
 
 ---
-
-## 🚀 Cómo probarla
