@@ -30,7 +30,9 @@ import okhttp3.Response;
 
 public class LoginFragment extends Fragment {
 
-    private static final String API_URL = "http://TU_IP_O_DOMINIO:PUERTO/login"; // Cambia por tu API Flask
+    private static final String API_URL = "http://10.0.2.2:5000/api/login";
+   // private static final String API_URL = "http://192.168.1.36:5000/api/login";
+
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     public LoginFragment() { }
@@ -85,12 +87,12 @@ public class LoginFragment extends Fragment {
                 Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_registerFragment));
     }
 
-    private void loginUsuario(String correo, String contrasena, View view) {
+    private void loginUsuario(String usuario, String contrasena, View view) {
         OkHttpClient client = new OkHttpClient();
 
         JSONObject json = new JSONObject();
         try {
-            json.put("correo", correo);
+            json.put("usuario", usuario); // ⚡ clave importante
             json.put("contrasena", contrasena);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -121,8 +123,10 @@ public class LoginFragment extends Fragment {
                             Toast.makeText(getContext(), "Login exitoso", Toast.LENGTH_SHORT).show();
                             Navigation.findNavController(view)
                                     .navigate(R.id.action_loginFragment_to_homeFragment);
-                        } else {
+                        } else if (response.code() == 401) {
                             Toast.makeText(getContext(), "Correo o contraseña incorrectos", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getContext(), "Error: " + response.code(), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

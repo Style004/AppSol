@@ -168,7 +168,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@drawable/ic_circle"
-                        app:tint="@color/deep_blue" />
+                        app:tint="@color/deep_blue"
+                        />
 
                     <ImageView
                         android:layout_width="25dp"
